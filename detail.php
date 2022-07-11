@@ -3,12 +3,14 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+var_dump($_POST['img']);
+
 // SDK de Mercado Pago
 require __DIR__ .  '/vendor/autoload.php';
 
 // Agrega credenciales
 MercadoPago\SDK::setAccessToken(getenv('MP_ACCESS_TOKEN'));
-
+MercadoPago\SDK::setIntegratorId(getenv('MP_INTEGRATOR_ID'));
 $path = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") .  "://" . $_SERVER['HTTP_HOST'];
 
 
@@ -17,9 +19,44 @@ $path = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "htt
 $preference = new MercadoPago\Preference();
 // Crea un ítem en la preferencia
 $item = new MercadoPago\Item();
+$item->id = 9999;
 $item->title = $_POST['title'];
 $item->quantity = 1;
 $item->unit_price = $_POST['price'];
+$item->picture_url = $path . $_POST['img'];
+$item->description = utf8_encode('Dispositivo móvil de Tienda e-commerce');
+$preference->external_reference = getenv('MP_EMAIL');
+
+$preference->payment_methods = array(
+  "excluded_payment_methods" => array(
+    array("id" => "visa")
+  ),
+  "excluded_payment_types" => array(
+    array("id" => "atm")
+  ),
+  "installments" => 6
+);
+
+$payer = new MercadoPago\Payer();
+$payer->name = "Lalo";
+$payer->surname = "Landa";
+$payer->email = "test_user_63274575@testuser.com";
+$payer->phone = array(
+  "area_code" => "57",
+  "number" => getenv('MP_PHONE')
+);
+
+
+
+$payer->address = array(
+  "street_name" => "Falsa",
+  "street_number" => 123,
+  "zip_code" => "180001"
+);
+
+$preference->payer = $payer;
+
+
 $preference->items = array($item);
 
 $preference->notification_url = $path . '/webhook.php';
