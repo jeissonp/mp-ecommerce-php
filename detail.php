@@ -3,8 +3,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-var_dump($_POST['img']);
-
 // SDK de Mercado Pago
 require __DIR__ .  '/vendor/autoload.php';
 
