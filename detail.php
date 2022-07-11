@@ -19,7 +19,7 @@ $path = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "htt
 $preference = new MercadoPago\Preference();
 // Crea un ítem en la preferencia
 $item = new MercadoPago\Item();
-$item->id = 9999;
+$item->id = rand(1000, 9999);
 $item->title = $_POST['title'];
 $item->quantity = 1;
 $item->unit_price = $_POST['price'];
