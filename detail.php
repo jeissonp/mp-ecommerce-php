@@ -26,8 +26,8 @@ $preference->notification_url = $path . '/webhook.php';
 
 $preference->back_urls = [
   'success' => $path . '/status-success.php',
-  'pending' => $path . '/status-success.php',
-  'failure' => $path . '/status-success.php',
+  'pending' => $path . '/status-pending.php',
+  'failure' => $path . '/status-failure.php',
 ];
 
 $preference->save();
