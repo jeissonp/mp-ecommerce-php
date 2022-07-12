@@ -1,19 +1,21 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 // SDK de Mercado Pago
 require __DIR__ .  '/vendor/autoload.php';
+
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+
+$logger = new Logger('my_logger');
+$logger->pushHandler(new StreamHandler(__DIR__ . '/app.log', Logger::DEBUG));
 
 // Agrega credenciales
 MercadoPago\SDK::setAccessToken(getenv('MP_ACCESS_TOKEN'));
 MercadoPago\SDK::setIntegratorId(getenv('MP_INTEGRATOR_ID'));
-error_log('execute detail.php');
-error_log(getenv('MP_ACCESS_TOKEN'));
-error_log(getenv('MP_INTEGRATOR_ID'));
-error_log(getenv('MP_PHONE'));
-error_log(getenv('MP_EMAIL'));
+$logger->info('execute detail.php');
+$logger->info(getenv('MP_ACCESS_TOKEN'));
+$logger->info(getenv('MP_INTEGRATOR_ID'));
+$logger->info(getenv('MP_PHONE'));
+$logger->info(getenv('MP_EMAIL'));
 
 $path = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") .  "://" . $_SERVER['HTTP_HOST'];
 

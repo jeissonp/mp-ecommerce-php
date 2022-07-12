@@ -1,12 +1,17 @@
 <?php
 require __DIR__ .  '/vendor/autoload.php';
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+
+$logger = new Logger('my_logger');
+$logger->pushHandler(new StreamHandler(__DIR__ . '/app.log', Logger::DEBUG));
 
 $json = file_get_contents('php://input');
-error_log('execute webhook');
-error_log('body');
-error_log($json);
-error_log('$_GET');
-error_log(json_encode($_GET));
+$logger->info('execute webhook');
+$logger->info('body');
+$logger->info($json);
+$logger->info('$_GET');
+$logger->info(json_encode($_GET));
 
 $result = [
   'status' => 'None',
