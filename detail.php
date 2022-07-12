@@ -23,17 +23,6 @@ $item->quantity = 1;
 $item->unit_price = $_POST['price'];
 $item->picture_url = $path . $_POST['img'];
 $item->description = utf8_encode('Dispositivo móvil de Tienda e-commerce');
-$preference->external_reference = getenv('MP_EMAIL');
-
-$preference->payment_methods = array(
-  "excluded_payment_methods" => array(
-    array("id" => "visa")
-  ),
-  "excluded_payment_types" => array(
-    array("id" => "atm")
-  ),
-  "installments" => 6
-);
 
 $payer = new MercadoPago\Payer();
 $payer->name = "Lalo";
@@ -64,6 +53,18 @@ $preference->back_urls = [
   'pending' => $path . '/status-pending.php',
   'failure' => $path . '/status-failure.php',
 ];
+
+$preference->external_reference = getenv('MP_EMAIL');
+
+$preference->payment_methods = array(
+  "excluded_payment_methods" => array(
+    array("id" => "visa")
+  ),
+  "excluded_payment_types" => array(
+    array("id" => "atm")
+  ),
+  "installments" => 6
+);
 
 $preference->save();
 
