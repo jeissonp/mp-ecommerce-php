@@ -9,6 +9,12 @@ require __DIR__ .  '/vendor/autoload.php';
 // Agrega credenciales
 MercadoPago\SDK::setAccessToken(getenv('MP_ACCESS_TOKEN'));
 MercadoPago\SDK::setIntegratorId(getenv('MP_INTEGRATOR_ID'));
+error_log('execute detail.php');
+error_log(getenv('MP_ACCESS_TOKEN'));
+error_log(getenv('MP_INTEGRATOR_ID'));
+error_log(getenv('MP_PHONE'));
+error_log(getenv('MP_EMAIL'));
+
 $path = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") .  "://" . $_SERVER['HTTP_HOST'];
 
 
